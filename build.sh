@@ -84,11 +84,6 @@ function precheck() {
     ok=1
   fi
 
-  if ! go version | egrep -q 'go(1\.1[6789])' ; then
-    echo "go version must be 1.16 or above"
-    ok=1
-  fi
-
   return $ok
 }
 
@@ -115,7 +110,7 @@ build_binary() {
   debug "Building via $(go version)"
   mkdir -p "$binary_build_path/bin"
   rm -f $binary_artifact
-  gobuild="go build -i ${opt_race} -ldflags \"$ldflags\" -o $binary_artifact go/cmd/orchestrator/main.go"
+  gobuild="go build -o $binary_artifact -ldflags \"$ldflags\" go/cmd/orchestrator/main.go"
 
   case $os in
     'linux')
